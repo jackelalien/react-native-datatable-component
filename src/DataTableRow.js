@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Pressable } from 'react-native';
 import { COL_TYPES } from './DataTable';
 import Line from './Line';
 import CheckBox from './CheckBox';
@@ -41,13 +41,22 @@ const DataTableRow = React.memo((props) => {
                         return (
                             <View key={index} style={[styles.rowCellContainer, { width: colWidth }]}>
                                 {
-                                    textAlign == 'center' ? (
+                                    colType === COL_TYPES.BUTTON && (
+                                        <View style={{ width: '100%', height: 20, alignItems: 'center', justifyContent: 'center' }}>
+                                            <Pressable onPress={props.button.action} style={{ borderRadius: 120 }}>
+                                                {props.button.icon}
+                                            </Pressable>
+                                        </View>
+                                    )
+                                }
+                                {
+                                    colType !== COL_TYPES.BUTTON && (textAlign == 'center' ? (
                                         <View style={{ width: '100%', height: 20, alignItems: 'center', justifyContent: 'center' }}>
                                             <CheckBox info={{ name, id: data.id }} handleOnRowSelect={handleOnRowSelect} initialVal={data[name] == true ? true : false} />
                                         </View>
                                     ) : (
                                         <Text style={[styles.rowCellText, { paddingLeft, paddingRight, textAlign, color }]}>{data[name]}</Text>
-                                    )
+                                    ))
                                 }
                             </View>
 
