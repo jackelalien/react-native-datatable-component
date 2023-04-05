@@ -10,7 +10,8 @@ import showCurrentProgress from '../functions/showCurrentProgress';
 export const COL_TYPES = {
     INT: 'INT',
     STRING: 'STRING',
-    CHECK_BOX: 'CHECK_BOX'
+    CHECK_BOX: 'CHECK_BOX',
+    BUTTON: `BUTTON`
 }
 
 const TOTAL_WIDTH = 100;
