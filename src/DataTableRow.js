@@ -9,6 +9,8 @@ const DataTableRow = React.memo((props) => {
     //data is object
     const { data, colNames, defaultEachColumnWidth, mapColNameToType, widthOfLine, handleOnRowSelect, eachColWidth } = props;
 
+    const uniqueColTypes = [COL_TYPES.BUTTON, COL_TYPES.COMPONENT];
+
     let color = 'black';
     let backgroundColor = 'transparent';
     if (data.doHighlight && data.doHighlight != 'default') {
@@ -26,7 +28,7 @@ const DataTableRow = React.memo((props) => {
                     colNames.map((name, index) => {
                         const colWidth = eachColWidth[name] == undefined ? defaultEachColumnWidth : eachColWidth[name];
                         const colType = mapColNameToType[name]
-                        const textAlign = (colType == COL_TYPES.STRING || colType == null) ? 'left' : (colType == COL_TYPES.CHECK_BOX || colType == COL_TYPES.RADIO) ? 'center' : 'right'
+                        const textAlign = (colType == COL_TYPES.STRING || colType == null) ? 'left' : (colType == COL_TYPES.CHECK_BOX || colType == COL_TYPES.RADIO || colType == COL_TYPES.COMPONENT || colType == COL_TYPES.BUTTON) ? 'center' : 'right'
                         let paddingLeft = 0;
                         let paddingRight = 0;
                         if (textAlign == 'left') {
@@ -43,14 +45,21 @@ const DataTableRow = React.memo((props) => {
                                 {
                                     colType === COL_TYPES.BUTTON && (
                                         <View style={{ width: '100%', height: 20, alignItems: 'center', justifyContent: 'center' }}>
-                                            <Pressable onPress={props.button.action} style={{ borderRadius: 120 }}>
-                                                {props.button.icon}
+                                            <Pressable onPress={data[name].action} style={{ borderRadius: 120 }}>
+                                                {data[name].icon}
                                             </Pressable>
                                         </View>
                                     )
                                 }
                                 {
-                                    colType !== COL_TYPES.BUTTON && (textAlign == 'center' ? (
+                                    colType === COL_TYPES.COMPONENT && (
+                                        <View style={{ width: `100%`, height: 20, alignItems: `center`, justifyContent: `center` }}>
+                                            {data[name].component}
+                                        </View>
+                                    )
+                                }
+                                {
+                                    !uniqueColTypes.includes(colType) && (textAlign == 'center' ? (
                                         <View style={{ width: '100%', height: 20, alignItems: 'center', justifyContent: 'center' }}>
                                             <CheckBox info={{ name, id: data.id }} handleOnRowSelect={handleOnRowSelect} initialVal={data[name] == true ? true : false} />
                                         </View>

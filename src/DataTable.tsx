@@ -11,7 +11,8 @@ export const COL_TYPES = {
     INT: 'INT',
     STRING: 'STRING',
     CHECK_BOX: 'CHECK_BOX',
-    BUTTON: `BUTTON`
+    BUTTON: `BUTTON`,
+    COMPONENT: `COMPONENT`
 }
 
 const TOTAL_WIDTH = 100;
